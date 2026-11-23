@@ -194,7 +194,7 @@
       font: 400 clamp(64px, 10.2vw, 142px)/.78 var(--serif);
       letter-spacing: -.055em;
     }
-    .hero-title span { display: block; color: var(--gold); font-style: italic; }
+    .hero-title > .hero-line { display: block; color: var(--gold); font-style: italic; }
     .hero-bottom {
       display: flex;
       max-width: 920px;
@@ -743,7 +743,7 @@
       line-height: .8;
       letter-spacing: -.06em;
     }
-    .hero-title span { margin-left: clamp(22px, 6vw, 90px); color: var(--ivory); }
+    .hero-title > .hero-line { color: var(--ivory); }
     .hero-bottom { max-width: none; margin-top: 34px; }
     .hero-bottom p { max-width: 220px; font-size: 10px; }
     .hero-index { margin-left: auto; }
@@ -851,7 +851,7 @@
       .hero { min-height: 100svh; }
       .hero-wordmark { top: 35%; left: 50%; font-size: 21vw; letter-spacing: -.1em; }
       .hero-title { font-size: clamp(58px,13vw,88px); }
-      .hero-title span { margin-left: 18px; }
+      .hero-title .hero-line--second .hero-line-inner { margin-left: 18px; }
       .hero-bottom { gap: 18px; }
       .hero-index { display: none; }
       .scroll-note { right: 20px; bottom: 31px; }
@@ -1108,13 +1108,11 @@
     .page-loader.is-gone { clip-path: inset(0 0 100%); }
     .loader-inner { position: relative; z-index: 1; }
     .loader-caption { align-items: center; }
-    .hero-wordmark-letter, .hero-letter {
+    .hero-wordmark-letter {
       display: inline-block;
       transform-origin: 50% 100%;
       will-change: transform, opacity;
     }
-    .hero-letter { white-space: pre; }
-    .hero-line { perspective: 700px; }
     .rail-meta {
       display: flex;
       align-items: center;
@@ -1152,13 +1150,14 @@
     .feature-image { transform-origin: center; }
     @media (max-width: 700px) {
       .hero-wordmark { top: 36%; }
+      .hero-title .hero-line--second .hero-line-inner { margin-left: 18px; }
       .rail-meta { gap: 11px; font-size: 7px; }
       .rail-progress { width: min(110px, 25vw); }
       .gallery .rail-meta { margin-top: 14px; }
     }
     @media (prefers-reduced-motion: reduce) {
       .page-loader { clip-path: none; }
-      .hero-wordmark-letter, .hero-letter { will-change: auto; }
+      .hero-wordmark-letter { will-change: auto; }
       .services-feature-label { transition: none; }
     }
   </style>
@@ -1584,22 +1583,6 @@
         }, .08)
         .to(".loader-inner", { autoAlpha: 0, scale: .94, duration: .34, ease: "power3.in" }, 1.48);
 
-      function splitLetters(element) {
-        if (element.dataset.motionSplit) return;
-        element.dataset.motionSplit = "true";
-        const label = element.textContent;
-        const fragment = document.createDocumentFragment();
-        Array.from(label).forEach(character => {
-          const letter = document.createElement("span");
-          letter.className = "hero-letter";
-          letter.setAttribute("aria-hidden", "true");
-          letter.textContent = character;
-          fragment.append(letter);
-        });
-        element.replaceChildren(fragment);
-      }
-      document.querySelectorAll(".hero-line-inner").forEach(splitLetters);
-
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
         .fromTo(".hero-visual img", { scale: 1.12, xPercent: -1.5 }, {
@@ -1608,11 +1591,11 @@
         .fromTo(".hero-wordmark", { autoAlpha: 0, letterSpacing: ".18em", scale: .96 }, {
           autoAlpha: 1, letterSpacing: "-.105em", scale: 1, duration: 1.35
         }, .12)
-        .fromTo(".hero-wordmark-letter", { yPercent: 85, rotateX: -45, autoAlpha: 0 }, {
-          yPercent: 0, rotateX: 0, autoAlpha: 1, duration: .9, stagger: .045, ease: "power4.out"
+        .fromTo(".hero-wordmark-letter", { yPercent: 85, autoAlpha: 0 }, {
+          yPercent: 0, autoAlpha: 1, duration: .9, stagger: .045, ease: "power4.out"
         }, .12)
-        .fromTo(".hero-line .hero-letter", { yPercent: 125, rotateX: -42, autoAlpha: 0 }, {
-          yPercent: 0, rotateX: 0, autoAlpha: 1, duration: .82, stagger: .024, ease: "power4.out"
+        .fromTo(".hero-line-inner", { yPercent: 115 }, {
+          yPercent: 0, duration: 1.15, stagger: .16, ease: "power4.out"
         }, .42)
         .fromTo(".hero-kicker", { autoAlpha: 0, y: 15 }, {
           autoAlpha: 1, y: 0, duration: .7
