@@ -1101,6 +1101,66 @@
       .button, .nav-cta { will-change: auto; }
       .motion-word { will-change: auto; }
     }
+    .page-loader {
+      clip-path: inset(0);
+      transition: opacity .8s cubic-bezier(.76,0,.24,1), clip-path 1s cubic-bezier(.76,0,.24,1), visibility 1s;
+    }
+    .page-loader.is-gone { clip-path: inset(0 0 100%); }
+    .loader-inner { position: relative; z-index: 1; }
+    .loader-caption { align-items: center; }
+    .hero-wordmark-letter, .hero-letter {
+      display: inline-block;
+      transform-origin: 50% 100%;
+      will-change: transform, opacity;
+    }
+    .hero-letter { white-space: pre; }
+    .hero-line { perspective: 700px; }
+    .rail-meta {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 16px;
+      color: #77736c;
+      font-size: 8px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .rail-meta span:last-child { color: #94754e; }
+    .rail-progress {
+      position: relative;
+      width: min(170px, 24vw);
+      height: 1px;
+      overflow: hidden;
+      background: rgba(11,11,11,.2);
+    }
+    .rail-progress i {
+      position: absolute;
+      inset: 0;
+      background: #94754e;
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+    .gallery .rail-meta { width: var(--page); margin: 20px auto 0; color: var(--muted); }
+    .gallery .rail-meta span:last-child { color: var(--gold); }
+    .gallery .rail-progress { background: rgba(245,241,233,.2); }
+    .gallery .rail-progress i { background: var(--gold); }
+    .services-feature { flex: 0 0 auto; }
+    .services-top { align-items: flex-end; }
+    .services-feature-label { transition: letter-spacing .4s ease, color .4s ease; }
+    .services-feature:hover .services-feature-label { letter-spacing: .22em; }
+    .field:focus-within label { color: var(--gold); transition: color .25s ease; }
+    .feature-image { transform-origin: center; }
+    @media (max-width: 700px) {
+      .hero-wordmark { top: 36%; }
+      .rail-meta { gap: 11px; font-size: 7px; }
+      .rail-progress { width: min(110px, 25vw); }
+      .gallery .rail-meta { margin-top: 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .page-loader { clip-path: none; }
+      .hero-wordmark-letter, .hero-letter { will-change: auto; }
+      .services-feature-label { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -1139,10 +1199,10 @@
         <span>STUDY 01 <i>—</i> THE MAKING OF A MOMENT</span>
       </div>
       <span class="hero-coordinate" aria-hidden="true">FRAME 01 &nbsp; / &nbsp; FIELD STUDY</span>
-      <span class="hero-wordmark" aria-hidden="true">SHUTTERS</span>
+      <span class="hero-wordmark" aria-hidden="true"><span class="hero-wordmark-letter">S</span><span class="hero-wordmark-letter">H</span><span class="hero-wordmark-letter">U</span><span class="hero-wordmark-letter">T</span><span class="hero-wordmark-letter">T</span><span class="hero-wordmark-letter">E</span><span class="hero-wordmark-letter">R</span><span class="hero-wordmark-letter">S</span></span>
       <div class="hero-content">
         <span class="eyebrow hero-kicker">Independent photography studio</span>
-        <h1 class="hero-title" id="hero-title"><span class="hero-line"><span class="hero-line-inner">Stories through</span></span><span class="hero-line hero-line--second"><span class="hero-line-inner">a different lens.</span></span></h1>
+        <h1 class="hero-title" id="hero-title" aria-label="Stories through a different lens."><span class="hero-line" aria-hidden="true"><span class="hero-line-inner">Stories through</span></span><span class="hero-line hero-line--second" aria-hidden="true"><span class="hero-line-inner">a different lens.</span></span></h1>
         <div class="hero-bottom">
           <p>For the fleeting, the feeling, and the details that stay with you.</p>
           <a class="button button--gold" href="#work" data-cursor="EXPLORE">Explore selected work
@@ -1216,6 +1276,7 @@
             <div class="card-copy"><div><small>06 — Gathered moments</small><h3>Events</h3></div><span class="card-arrow"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg></span></div>
           </a>
         </div>
+        <div class="rail-meta" aria-hidden="true"><span>Scroll to discover</span><span class="rail-progress"><i></i></span><span>01 — 06</span></div>
       </div>
     </section>
 
@@ -1225,14 +1286,14 @@
           <span class="eyebrow">Made for your story</span>
           <h2 class="section-heading" id="services-title">The art of <em>being there.</em></h2>
         </div>
-        <a class="services-feature reveal" href="#work" data-cursor="VIEW">
-          <div class="services-feature-image photo-frame" data-photo="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&amp;fit=crop&amp;w=2000&amp;q=84">
-            <img alt="An editorial portrait in sculpted natural light" loading="lazy" decoding="async">
-          </div>
-          <span class="services-feature-label"><span>CREATIVE DIRECTION — 001</span><span>See the work ↗</span></span>
-        </a>
         <p class="section-intro">A thoughtful process from first conversation to final frame. Tailored to the subject, the setting and what matters most.</p>
       </div>
+      <a class="services-feature reveal" href="#work" data-cursor="VIEW">
+        <div class="services-feature-image photo-frame" data-photo="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&amp;fit=crop&amp;w=2000&amp;q=84">
+          <img alt="An editorial portrait in sculpted natural light" loading="lazy" decoding="async">
+        </div>
+        <span class="services-feature-label"><span>CREATIVE DIRECTION — 001</span><span>See the work ↗</span></span>
+      </a>
       <div class="service-grid">
         <article class="service-card reveal">
           <span class="service-number">01</span>
@@ -1326,6 +1387,7 @@
           </a>
         </div>
       </div>
+      <div class="rail-meta" aria-hidden="true"><span>Scroll to discover</span><span class="rail-progress"><i></i></span><span>01 — 06</span></div>
     </section>
 
     <section class="testimonial" aria-labelledby="testimonial-title">
@@ -1520,7 +1582,23 @@
         .fromTo(".loader-count", { textContent: 0 }, {
           textContent: 100, duration: 1.45, snap: { textContent: 1 }, ease: "power2.out"
         }, .08)
-        .to(pageLoader, { yPercent: -100, duration: .92, ease: "power4.inOut" }, 1.62);
+        .to(".loader-inner", { autoAlpha: 0, scale: .94, duration: .34, ease: "power3.in" }, 1.48);
+
+      function splitLetters(element) {
+        if (element.dataset.motionSplit) return;
+        element.dataset.motionSplit = "true";
+        const label = element.textContent;
+        const fragment = document.createDocumentFragment();
+        Array.from(label).forEach(character => {
+          const letter = document.createElement("span");
+          letter.className = "hero-letter";
+          letter.setAttribute("aria-hidden", "true");
+          letter.textContent = character;
+          fragment.append(letter);
+        });
+        element.replaceChildren(fragment);
+      }
+      document.querySelectorAll(".hero-line-inner").forEach(splitLetters);
 
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
@@ -1530,8 +1608,11 @@
         .fromTo(".hero-wordmark", { autoAlpha: 0, letterSpacing: ".18em", scale: .96 }, {
           autoAlpha: 1, letterSpacing: "-.105em", scale: 1, duration: 1.35
         }, .12)
-        .fromTo(".hero-line-inner", { yPercent: 115, rotate: 2 }, {
-          yPercent: 0, rotate: 0, duration: 1.15, stagger: .16, ease: "power4.out"
+        .fromTo(".hero-wordmark-letter", { yPercent: 85, rotateX: -45, autoAlpha: 0 }, {
+          yPercent: 0, rotateX: 0, autoAlpha: 1, duration: .9, stagger: .045, ease: "power4.out"
+        }, .12)
+        .fromTo(".hero-line .hero-letter", { yPercent: 125, rotateX: -42, autoAlpha: 0 }, {
+          yPercent: 0, rotateX: 0, autoAlpha: 1, duration: .82, stagger: .024, ease: "power4.out"
         }, .42)
         .fromTo(".hero-kicker", { autoAlpha: 0, y: 15 }, {
           autoAlpha: 1, y: 0, duration: .7
@@ -1649,6 +1730,7 @@
         const section = document.querySelector(sectionSelector);
         const track = document.querySelector(trackSelector);
         if (!section || !track) return;
+        const progress = section.querySelector(".rail-progress i");
         const distance = () => Math.max(0, track.scrollWidth - track.clientWidth);
         if (distance() < 40) return;
         const animation = gsap.to(track, { scrollLeft: distance, ease: "none" });
@@ -1660,9 +1742,20 @@
           pin: section,
           scrub: .85,
           anticipatePin: 1,
-          invalidateOnRefresh: true
+          invalidateOnRefresh: true,
+          onUpdate: self => progress && gsap.set(progress, { scaleX: self.progress })
         });
       }
+      document.querySelectorAll(".category-grid, .gallery-grid").forEach(track => {
+        const progress = track.parentElement.querySelector(".rail-progress i");
+        if (!progress) return;
+        const updateProgress = () => {
+          const distance = track.scrollWidth - track.clientWidth;
+          gsap.set(progress, { scaleX: distance > 0 ? track.scrollLeft / distance : 0 });
+        };
+        track.addEventListener("scroll", updateProgress, { passive: true });
+        updateProgress();
+      });
       if (window.matchMedia("(min-width: 1001px)").matches) {
         pinHorizontalScene(".portfolio", ".category-grid");
         pinHorizontalScene(".gallery", ".gallery-grid");
@@ -1720,17 +1813,24 @@
         const cursorX = gsap.quickTo(cursor, "x", { duration: .28, ease: "power3.out" });
         const cursorY = gsap.quickTo(cursor, "y", { duration: .28, ease: "power3.out" });
         const heroFloat = document.querySelector(".hero-float");
+        const heroImage = document.querySelector(".hero-visual img");
         const floatX = heroFloat && gsap.quickTo(heroFloat, "x", { duration: .7, ease: "power2.out" });
         const floatY = heroFloat && gsap.quickTo(heroFloat, "y", { duration: .7, ease: "power2.out" });
+        const heroImageX = heroImage && gsap.quickTo(heroImage, "x", { duration: .8, ease: "power2.out" });
+        const heroImageY = heroImage && gsap.quickTo(heroImage, "y", { duration: .8, ease: "power2.out" });
         window.addEventListener("pointermove", event => {
           cursorX(event.clientX);
           cursorY(event.clientY);
           cursor.classList.add("is-active");
+          const bounds = document.querySelector(".hero").getBoundingClientRect();
+          const withinHero = event.clientY < bounds.bottom && event.clientY > bounds.top;
           if (heroFloat) {
-            const bounds = document.querySelector(".hero").getBoundingClientRect();
-            const withinHero = event.clientY < bounds.bottom && event.clientY > bounds.top;
             floatX(withinHero ? (event.clientX / window.innerWidth - .5) * -18 : 0);
             floatY(withinHero ? (event.clientY / window.innerHeight - .5) * -16 : 0);
+          }
+          if (heroImage) {
+            heroImageX(withinHero ? (event.clientX / window.innerWidth - .5) * -20 : 0);
+            heroImageY(withinHero ? (event.clientY / window.innerHeight - .5) * -14 : 0);
           }
         }, { passive: true });
 
@@ -1776,20 +1876,25 @@
           gsap.set(card, { transformPerspective: 1000, transformOrigin: "center center" });
           const imageX = gsap.quickTo(image, "x", { duration: .45, ease: "power2.out" });
           const imageY = gsap.quickTo(image, "y", { duration: .45, ease: "power2.out" });
+          const imageScale = gsap.quickTo(image, "scale", { duration: .65, ease: "power3.out" });
+          const rotationX = gsap.quickTo(card, "rotationX", { duration: .45, ease: "power2.out" });
+          const rotationY = gsap.quickTo(card, "rotationY", { duration: .45, ease: "power2.out" });
           card.addEventListener("pointermove", event => {
             const bounds = card.getBoundingClientRect();
             const x = (event.clientX - bounds.left) / bounds.width - .5;
             const y = (event.clientY - bounds.top) / bounds.height - .5;
             imageX(x * -12);
             imageY(y * -12);
-            gsap.to(card, { rotationY: x * 2.4, rotationX: y * -2.4, duration: .45, ease: "power2.out" });
-            gsap.to(image, { scale: 1.055, duration: .65, ease: "power3.out" });
+            rotationY(x * 2.4);
+            rotationX(y * -2.4);
+            imageScale(1.055);
           });
           card.addEventListener("pointerleave", () => {
             imageX(0);
             imageY(0);
-            gsap.to(card, { rotationY: 0, rotationX: 0, duration: .65, ease: "power3.out" });
-            gsap.to(image, { scale: 1, duration: .8, ease: "power3.out" });
+            rotationY(0);
+            rotationX(0);
+            imageScale(1);
           });
         });
       }
